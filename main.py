@@ -3,10 +3,8 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import date, timedelta
 import datetime
-from magnum import Magnum
 import hashlib,dbinfo,mysql.connector,platform
 app = FastAPI()
-handler = Magnum(app)
 
 
 def get_hwid():
