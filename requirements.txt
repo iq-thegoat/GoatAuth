@@ -1,4 +1,6 @@
 fastapi
 uvicorn
+setuptools
 mysql-connector-python
 hashlib
+
