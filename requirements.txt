@@ -1,6 +1,6 @@
---upgrade fastapi
---upgrade uvicorn
---upgrade setuptools
---upgrade mysql-connector-python
---upgrade hashlib
+fastapi
+uvicorn
+setuptools
+mysql-connector-python
+hashlib
 
