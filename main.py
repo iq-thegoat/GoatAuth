@@ -168,7 +168,7 @@ def Login(Data:REG):
 
 @app.get("/genkey/{key}/{type_sub}") 
 def gen(key:str,type_sub:str):
-    if key == "2z0d6c4GUs1aqnplLBVAHMg9k2uwfGvCATRyWBtY1pXaBrrFjJLkdb6ogdJZz27dVl79D3oRWMmeZI2uRmm6rRBJ3JtBvsD3bSmgb5Z7ZXW6NX8D2dta97qsGiSFyTwJN8OPfopIryfhBPjk1m0jldE3mTkZ4fWRTBX0f6Qp3VxICULx9iTJeXer52g8sg2S2K9hrEcH51QnCfMOqUQ7UofsCXU89tixYnL5lr0l8RvTXrCf3N2DUpamLaXX1GIf":
+    if key == "YOURKEY":
         key = subkey_To_db(type_sub)
         return{"GENERATED":key}
 
