@@ -6,31 +6,31 @@ database = auth.DB(user='myuser', password='mypassword', host='localhost', datab
 
 # Use the insert() method to add a new user to the database.
 # Example:
-database.insert(key='mykey', email='johndoe@example.com', username='johndoe', password='mypassword', HWID='123456789')
+`database.insert(key='mykey', email='johndoe@example.com', username='johndoe', password='mypassword', HWID='HWID')`
 
 # Use the isValidKey() method to check if a registration key is valid.
 # Example:
-if database.isValidKey(key='mykey'):
+```if database.isValidKey(key='mykey'):
     print('Valid Key')
 else:
-    print('Invalid Key')
+    print('Invalid Key')````
 
 # Use the GenKey() method to generate a new registration key.
 # Example:
-key = database.GenKey(subtype='month')
+`key = database.GenKey(subtype='month')`
 
 # Use the login method to check if the these credintals are in the database 
 # Example:
-result = database.login(username="user_username",password="user_password",HWID="user_HWID")
+```result = database.login(username="user_username",password="user_password",HWID="user_HWID")
 
 if result:
   #Do somthing
 
 else:
   #print("Wrong Credintals")
-  
+```
  #reset HWID
- databse.resethwid(email="userEmail",password="user_password",HWID="newHWID")
+`databse.resethwid(email="userEmail",password="user_password",HWID="newHWID")`
  
 
 
