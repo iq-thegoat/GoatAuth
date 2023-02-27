@@ -1,5 +1,7 @@
 #GoatAuth
 
+"I just want to clarify that this is a module I made for fun. I know it has a lot of problems, but I'm trying to fix as many as I can while growing my basic Python knowledge."
+
 goatauth is just a simple way to make a SQL auth system without hurting your mind on
 
 the code is made for dummies not by design but it happens that iam a certifed dummy myself
