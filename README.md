@@ -25,7 +25,9 @@ Args:
 Auth = DB(HashCredentials=True,HWIDlock=True,Name="",user="",database="",host="",password='')
 
 ```
-now you created this structure in your database ![dbstructure](https://user-images.githubusercontent.com/113275720/221686970-7fb60536-d572-438e-b99e-eefa8a2ab24e.png)
+now you created this structure in your database 
+
+![dbstructure](https://user-images.githubusercontent.com/113275720/221686970-7fb60536-d572-438e-b99e-eefa8a2ab24e.png)
 
 ```
 now lets go through each method fast because i have school tommorow
