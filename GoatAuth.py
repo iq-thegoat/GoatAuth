@@ -6,47 +6,41 @@ class DB:
     def __init__(self,hashCredentials:bool,Name:str,HWIDlock:bool,user:str,password:str,host:str,database:str):
 
         """
-            A class that provides functionality for managing a MySQL database with simple easy methods.
+    A class that provides functionality for managing a MySQL database with simple easy methods.
 
-            ...
+    Args:
+        hash_credentials (bool): A flag indicating whether to hash passwords using SHA256 before storing them.
+        name (str): The name of the database so that you can have more than one authsystem in the same db with different names.
+        hwid_lock (bool): A flag indicating whether to use Hardware ID (HWID) locking mechanism.
+        user (str): The username of the MySQL database.
+        password (str): The password for the MySQL database.
+        host (str): The hostname of the MySQL database.
+        database (str): The name of the MySQL database.
 
-            Attributes
-            ----------
-            cnx : mysql.connector.connection_cext.CMySQLConnection
-                The connection object for the MySQL database.
+    Attributes:
+        cnx (mysql.connector.connection_cext.CMySQLConnection): The connection object for the MySQL database.
+        cr (mysql.connector.cursor_cext.CMySQLCursor): The cursor object for the MySQL database.
+        hwid_lock (bool): A flag indicating whether to use Hardware ID (HWID) locking mechanism.
+        name (str): The name of the database so that you can have more than one authsystem in the same db with different names.
+        hash_credentials (bool): A flag indicating whether to hash passwords using SHA256 before storing them.
+        hashing_salt (str): A string used as a salt to hash passwords.
 
-            cr : mysql.connector.cursor_cext.CMySQLCursor
-                The cursor object for the MySQL database.
-
-            HWIDLOCK : bool
-                A flag indicating whether to use Hardware ID (HWID) locking mechanism.
-
-            name : str
-                The name of the database so that you can have more than one authsystem in the same db with diffrent names.
-
-            hashPasswords : bool
-                A flag indicating whether to hash passwords using SHA256 before storing them.
-
-            ...
-
-            Methods
-            -------
-            is_valid_key(key:str) -> bool:
-                Checks if a registration key is valid.
-
-            hash(key:str) -> str:
-                Hashes a key using SHA-256.
-
-            insert_into_logkeys(user:str, email:str, key:str) -> None:
-                Inserts the used key into the keys log table with the user info and the using date.
-
-            remove_key(key:str, user:str, email:str) -> bool:
-                Removes a registration key and logs its use.
-
-            register(key:str, email:str, username:str, password:str, HWID:str) -> bool:
-                Registers a new user with the specified credentials and rem
-
-        """
+    Methods:
+        is_valid_key(self, key: str) -> bool: Checks if a registration key is valid.
+        hash(self, key: str) -> str: Hashes a key using SHA-256.
+        insert_into_logkeys(self, user: str, email: str, key: str) -> None: Inserts the used key into the keys log table with the user info and the using date.
+        remove_key(self, key: str, user: str, email: str) -> bool: Removes a registration key and logs its use.
+        register(self, key: str, email: str, username: str, password: str, hwid: str) -> bool: Registers a new user with the specified credentials and remembers the HWID.
+        gen_key(self, subtype: str) -> bool: Generates and saves one registration key.
+        reset_hwid(self, user_email: str, user_password: str, new_hwid: str) -> bool: Resets user's HWID.
+        login(self, username: str, password: str, hwid: Optional[str]) -> bool: Logs a user in with the specified credentials.
+        remove_user(self, email: str) -> bool: Removes user from the database.
+        select_all(self, table: str) -> Optional[List]: Selects all items from a table.
+        custom_code(self, code: str) -> bool: Runs your custom MySQL queries.
+        remove_expired_subs(self) -> bool: Removes expired subscriptions.
+        reset_password(self, new_password: str, user_mail: Optional[str], user_username: Optional[str]) -> bool: Resets user's password.
+        remaining_days(self, user_email: Optional[str], user_username: Optional[str]) -> Optional[List]: Returns how many days are left in a user's subscription.
+    """
 
 
         try:
@@ -210,6 +204,7 @@ class DB:
                 password = self.hash(password)
             self.cr.execute(f"UPDATE {self.name}userdata set HWID = '%s' where email = '%s' and password = '%s'"%(NEW_HWID,user_email,user_password))
             self.cnx.commit()
+            return True
         
         else:
             raise AttributeError("you MUST enable HWIDlock to use this function")
@@ -253,11 +248,11 @@ class DB:
             self.cr.execute(f"""
             delete from {self.name}userdata where email = "%s"
             """%email)
-            return "Success"
+            return True
         except Exception as e:
             raise e from e
     
-    def select_all(self,table):
+    def select_all(self,table:str):
         self.cr.execute(f"select * from %s"%table)
         return self.cr.fetchall()
 
@@ -270,8 +265,12 @@ class DB:
 
     
     def remove_expired_subs(self):
-        self.cr.execute(f"DELETE FROM {self.name}userdata WHERE End_date < CURDATE()")
-
+        try:
+            self.cr.execute(f"DELETE FROM {self.name}userdata WHERE End_date < CURDATE()")
+            return True
+        except Exception as e:
+            raise e 
+            
 
     def reset_password(self,new_password:str,user_email:str = None,user_username:str = None) :
         password = hash(new_password)
