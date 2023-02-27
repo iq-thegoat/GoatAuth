@@ -1,6 +1,6 @@
 #GoatAuth
 
-goatauth is just a simple way to make a SQL auth system without hurting your mind on a friday morning making a bad startup because you never make good startup ideas stop just stop
+goatauth is just a simple way to make a SQL auth system without hurting your mind on
 
 the code is made for dummies not by design but it happens that iam a certifed dummy myself
 
@@ -9,7 +9,7 @@ anyways heres how to use it
 ```
 from GoatAuth.GoatAuth import DB
 
-# first of all initialize the class of course you should know that or its not your time to make a program that need auth nobody is buying your img to assci program jimmy
+# first of all initialize the class of course you should know that or its not your time to make a program that need auth
 
 """
 Args:
